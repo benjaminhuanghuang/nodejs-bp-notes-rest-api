@@ -1,0 +1,38 @@
+{
+  "name": "nodejs-bp-notes-rest-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_ENV=development nodemon dist/index.js",
+    "build:watch": "babel -w --out-dir=dist ./server",
+    "clean": "rimraf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benjaminhuanghuang/nodejs-bp-notes-rest-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benjaminhuanghuang/nodejs-bp-notes-rest-api/issues"
+  },
+  "homepage": "https://github.com/benjaminhuanghuang/nodejs-bp-notes-rest-api#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.14",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "jsonwebtoken": "^8.3.0"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "eslint-config-equimper": "^2.2.2",
+    "nodemon": "^1.18.3",
+    "rimraf": "^2.6.2"
+  }
+}
