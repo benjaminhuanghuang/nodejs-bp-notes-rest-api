@@ -6,7 +6,7 @@ import middlewareConfig from './config/middlewares';
 //
 import { BPRecordRoutes, UserRoutes } from './modules';
 
-const PORT = process.env.PORT || 8964;
+const PORT = process.env.PORT || 8964; // for heroku deployment
 
 dbConfig();
 
