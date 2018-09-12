@@ -1,8 +1,8 @@
 import BPRecord from './model';
 
-export const createBPRecord= async (req, res) => {
+export const createBPRecord = async (req, res) => {
   const { lowPressure, highPressure } = req.body;
-  const newRecord = new BPRecord({ lowPressure, highPressure, Date() });
+  const newRecord = new BPRecord({ lowPressure, highPressure, createdDate: Date() });
 
   try {
     return res.status(201).json({
@@ -19,7 +19,7 @@ export const createBPRecord= async (req, res) => {
 export const deleteBPRecord = async (req, res) => {
   try {
     return res.status(200).json({
-      meetups: await Meetup.find({}),
+      meetups: await BPRecord.find({}),
     });
   } catch (e) {
     return res.status(e.status).json({

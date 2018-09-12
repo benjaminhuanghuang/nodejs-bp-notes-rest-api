@@ -16,7 +16,7 @@ export const loginWithAuth0 = async (req, res) => {
     }
 
     const user = await User.findOrCreate(userInfo);
-    //console.log(user);
+    // console.log(user);
     return res.status(200).json({
       success: true,
       user: {

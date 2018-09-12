@@ -5,17 +5,17 @@ const BPRecordShema = new Schema({
     type: Number,
     required: true,
     min: [30, 'Invalid value (too low)'],
-    max: [300, 'Invalid value (too high)']
+    max: [300, 'Invalid value (too high)'],
   },
   highPressure: {
     type: String,
     required: true,
     min: [30, 'Invalid value (too low)'],
-    max: [300, 'Invalid value (too high)']
+    max: [300, 'Invalid value (too high)'],
   },
   createdDate: {
     type: Date,
-    required: [true, "Created date is required."],
+    required: [true, 'Created date is required.'],
   },
   user: {
     type: Schema.Types.ObjectId,

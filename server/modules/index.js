@@ -1,2 +1,2 @@
-export * from './bpnotes';
+export * from './bprecords';
 export * from './users';
