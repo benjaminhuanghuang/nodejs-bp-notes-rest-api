@@ -37,7 +37,20 @@ export const getBPRecords = async (req, res) => {
   } catch (e) {
     return res.status(e.status).json({
       error: true,
-      message: 'Error with Meetup',
+      message: 'Error with BPRecord',
+    });
+  }
+};
+
+export const getAllBPRecords = async (req, res) => {
+  try {
+    return res.status(200).json({
+      bpRecords: await BPRecord.find({}),
+    });
+  } catch (e) {
+    return res.status(e.status).json({
+      error: true,
+      message: 'Error with BPRecord',
     });
   }
 };

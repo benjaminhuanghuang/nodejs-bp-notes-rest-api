@@ -6,5 +6,6 @@ const routes = new Router();
 //requireJwtAuth, 
 routes.post('/bprecords/new', BPRecordController.createBPRecord);
 routes.post('/bprecords', BPRecordController.getBPRecords);
+routes.get('/bprecords/all', BPRecordController.getAllBPRecords);
 
 export default routes;
