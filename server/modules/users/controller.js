@@ -28,3 +28,10 @@ export const loginWithAuth0 = async (req, res) => {
     return res.status(400).json({ error: true, errorMessage: e.message });
   }
 };
+
+export const sayHi = (req, res) => {
+  const msg = 'Hello';
+  return res.status(200).json({
+    message: msg,
+  });
+};
