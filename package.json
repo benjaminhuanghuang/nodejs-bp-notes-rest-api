@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node dist/index.js",
     "build": "babel --out-dir=dist ./server",
+    "prod": "NODE_ENV=production node dist/index.js",
+    "heroku-postbuild": "npm run build",
     "dev": "NODE_ENV=development nodemon dist/index.js",
     "build:watch": "babel -w --out-dir=dist ./server",
     "clean": "rimraf dist",
