@@ -17,3 +17,9 @@ Push code to heroku
 
 ## Config Vars
 Select applicaiton -> Settings
+
+
+## Build script on heroku
+```
+"heroku-postbuild": "npm run build",
+```
