@@ -5,6 +5,7 @@ export const createBPRecord = async (req, res) => {
   const newRecord = new BPRecord({ lowPressure, highPressure });
 
   try {
+    // 201 The request has been fulfilled, resulting in the creation of a new resource
     return res.status(201).json({
       bpRecord: await newRecord.save(),
     });
@@ -19,7 +20,8 @@ export const createBPRecord = async (req, res) => {
 export const deleteBPRecord = async (req, res) => {
   try {
     const id = req.params.id;
-    return res.status(201).json({
+    // 204 No Content The server successfully processed the request and is not returning any content.[14]
+    return res.status(204).json({
       bpRecord: await BPRecord.findByIdAndRemove({ _id: id }),
     });
   } catch (e) {
@@ -31,14 +33,21 @@ export const deleteBPRecord = async (req, res) => {
 };
 
 export const getBPRecords = async (req, res) => {
+  const { startDate, endDate } = req.body;
+  const query = {
+    createdAt: {
+      $lte: new Date(startDate),
+      $gte: new Date(endDate),
+    },
+  };
   try {
     return res.status(200).json({
-      bpRecords: await BPRecord.find({}),
+      bpRecords: await BPRecord.find(query),
     });
   } catch (e) {
     return res.status(e.status).json({
       error: true,
-      message: 'Error with BPRecord',
+      message: 'Error with fetching BPRecords',
     });
   }
 };
