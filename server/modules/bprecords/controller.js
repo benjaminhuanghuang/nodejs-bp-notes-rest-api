@@ -2,7 +2,7 @@ import BPRecord from './model';
 
 export const createBPRecord = async (req, res) => {
   const { lowPressure, highPressure } = req.body;
-  const newRecord = new BPRecord({ lowPressure, highPressure, createdDate: Date() });
+  const newRecord = new BPRecord({ lowPressure, highPressure });
 
   try {
     return res.status(201).json({
@@ -11,20 +11,21 @@ export const createBPRecord = async (req, res) => {
   } catch (e) {
     return res.status(e.status).json({
       error: true,
-      message: 'Error with Meetup',
+      message: 'Error with creating BRCecord',
     });
   }
 };
 
 export const deleteBPRecord = async (req, res) => {
   try {
-    return res.status(200).json({
-      meetups: await BPRecord.find({}),
+    const id = req.params.id;
+    return res.status(201).json({
+      bpRecord: await BPRecord.findByIdAndRemove({ _id: id }),
     });
   } catch (e) {
     return res.status(e.status).json({
       error: true,
-      message: 'Error with Meetup',
+      message: 'Error with deleting Meetup',
     });
   }
 };

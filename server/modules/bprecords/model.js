@@ -8,19 +8,17 @@ const BPRecordShema = new Schema({
     max: [300, 'Invalid value (too high)'],
   },
   highPressure: {
-    type: String,
+    type: Number,
     required: true,
     min: [30, 'Invalid value (too low)'],
     max: [300, 'Invalid value (too high)'],
-  },
-  createdDate: {
-    type: Date,
-    required: [true, 'Created date is required.'],
   },
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
-}, { timestamps: true });
+}, {
+  timestamps: true, // create fields createdAt and updatedAt
+});
 
 export default mongoose.model('BPRecord', BPRecordShema);
