@@ -20,8 +20,8 @@ export const createBPRecord = async (req, res) => {
 export const deleteBPRecord = async (req, res) => {
   try {
     const id = req.params.id;
-    // 204 No Content The server successfully processed the request and is not returning any content.[14]
-    return res.status(204).json({
+    // 204 No Content The server successfully processed the request and is not returning any content
+    return res.status(202).json({
       bpRecord: await BPRecord.findByIdAndRemove({ _id: id }),
     });
   } catch (e) {
@@ -36,8 +36,8 @@ export const getBPRecords = async (req, res) => {
   const { startDate, endDate } = req.body;
   const query = {
     createdAt: {
-      $lte: new Date(startDate),
-      $gte: new Date(endDate),
+      $gte: new Date(startDate),
+      $lt: new Date(endDate).setDate(new Date(endDate).getDate() + 1),
     },
   };
   try {
