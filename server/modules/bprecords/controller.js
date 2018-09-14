@@ -1,4 +1,5 @@
 import BPRecord from './model';
+import moment from 'moment';
 
 export const createBPRecord = async (req, res) => {
   const { lowPressure, highPressure } = req.body;
@@ -33,11 +34,11 @@ export const deleteBPRecord = async (req, res) => {
 };
 
 export const getBPRecords = async (req, res) => {
-  const { startDate, endDate } = req.body;
+  const { startUTC, endUTC } = req.body;
   const query = {
     createdAt: {
-      $gte: new Date(startDate),
-      $lt: new Date(endDate).setDate(new Date(endDate).getDate() + 1),
+      $gte: new Date(startUTC),
+      $lt: new Date(endUTC),
     },
   };
   try {
