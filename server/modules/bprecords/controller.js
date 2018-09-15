@@ -1,5 +1,4 @@
 import BPRecord from './model';
-import moment from 'moment';
 
 export const createBPRecord = async (req, res) => {
   const { lowPressure, highPressure } = req.body;
@@ -43,7 +42,39 @@ export const getBPRecords = async (req, res) => {
   };
   try {
     return res.status(200).json({
-      bpRecords: await BPRecord.find(query),
+      // -1 to specify descending order.
+      bpRecords: await BPRecord.find(query).sort({ createdAt: -1 }),
+    });
+  } catch (e) {
+    return res.status(e.status).json({
+      error: true,
+      message: 'Error with fetching BPRecords',
+    });
+  }
+};
+
+export const getChartData = async (req, res) => {
+  const { startUTC, endUTC } = req.body;
+  try {
+    return res.status(200).json({
+      bpRecords: await BPRecord.aggregate([
+        {
+          $match: {
+            createdAt: {
+              $gte: new Date(startUTC),
+              $lt: new Date(endUTC),
+            },
+          },
+        },
+        { $sort: { createdAt: -1 } },
+        {
+          $group: {
+            _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+            average_low: { $avg: '$lowPressure' },
+            average_high: { $avg: '$highPressure' },
+          },
+        },
+      ]),
     });
   } catch (e) {
     return res.status(e.status).json({
