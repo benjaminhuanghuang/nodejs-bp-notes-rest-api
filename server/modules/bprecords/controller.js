@@ -1,8 +1,8 @@
 import BPRecord from './model';
 
 export const createBPRecord = async (req, res) => {
-  const { lowPressure, highPressure } = req.body;
-  const newRecord = new BPRecord({ lowPressure, highPressure });
+  const { lowPressure, highPressure, userId } = req.body;
+  const newRecord = new BPRecord({ lowPressure, highPressure, user: userId });
 
   try {
     // 201 The request has been fulfilled, resulting in the creation of a new resource
@@ -27,18 +27,33 @@ export const deleteBPRecord = async (req, res) => {
   } catch (e) {
     return res.status(e.status).json({
       error: true,
-      message: 'Error with deleting Meetup',
+      message: 'Error with deleting BP records',
+    });
+  }
+};
+
+export const deleteAllBPRecord = async (req, res) => {
+  try {
+    // 204 No Content The server successfully processed the request and is not returning any content
+    return res.status(202).json({
+      result: await BPRecord.deleteMany({}),
+    });
+  } catch (e) {
+    return res.status(e.status).json({
+      error: true,
+      message: 'Error with deleting BP records',
     });
   }
 };
 
 export const getBPRecords = async (req, res) => {
-  const { startUTC, endUTC } = req.body;
+  const { startUTC, endUTC, userId } = req.body;
   const query = {
     createdAt: {
       $gte: new Date(startUTC),
       $lt: new Date(endUTC),
     },
+    user: userId,
   };
   try {
     return res.status(200).json({
@@ -54,7 +69,7 @@ export const getBPRecords = async (req, res) => {
 };
 
 export const getChartData = async (req, res) => {
-  const { startUTC, endUTC } = req.body;
+  const { startUTC, endUTC, userId } = req.body;
   try {
     return res.status(200).json({
       bpRecords: await BPRecord.aggregate([
@@ -64,6 +79,7 @@ export const getChartData = async (req, res) => {
               $gte: new Date(startUTC),
               $lt: new Date(endUTC),
             },
+            user: userId,
           },
         },
         { $sort: { createdAt: -1 } },
