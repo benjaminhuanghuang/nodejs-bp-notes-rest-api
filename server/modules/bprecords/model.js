@@ -13,6 +13,10 @@ const BPRecordShema = new Schema({
     min: [30, 'Invalid value (too low)'],
     max: [300, 'Invalid value (too high)'],
   },
+  createdTime: {
+    type: Date,
+    default: Date.now,
+  },
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',

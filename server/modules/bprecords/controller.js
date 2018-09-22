@@ -1,8 +1,8 @@
 import BPRecord from './model';
 
 export const createBPRecord = async (req, res) => {
-  const { lowPressure, highPressure, userId } = req.body;
-  const newRecord = new BPRecord({ lowPressure, highPressure, user: userId });
+  const { lowPressure, highPressure, createdTime, userId } = req.body;
+  const newRecord = new BPRecord({ lowPressure, highPressure, createdTime, user: userId });
 
   try {
     // 201 The request has been fulfilled, resulting in the creation of a new resource
@@ -58,7 +58,7 @@ export const getBPRecords = async (req, res) => {
   try {
     return res.status(200).json({
       // -1 to specify descending order.
-      bpRecords: await BPRecord.find(query).sort({ createdAt: -1 }),
+      bpRecords: await BPRecord.find(query).sort({ createdTime: -1 }),
     });
   } catch (e) {
     return res.status(e.status).json({
@@ -75,7 +75,7 @@ export const getChartData = async (req, res) => {
       bpRecords: await BPRecord.aggregate([
         {
           $match: {
-            createdAt: {
+            createdTime: {
               $gte: new Date(startUTC),
               $lt: new Date(endUTC),
             },
@@ -85,7 +85,7 @@ export const getChartData = async (req, res) => {
         { $sort: { createdAt: -1 } },
         {
           $group: {
-            _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+            _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdTime' } },
             average_low: { $avg: '$lowPressure' },
             average_high: { $avg: '$highPressure' },
           },
