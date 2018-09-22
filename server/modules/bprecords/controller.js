@@ -1,7 +1,12 @@
 import BPRecord from './model';
 
 export const createBPRecord = async (req, res) => {
-  const { lowPressure, highPressure, createdTime, userId } = req.body;
+  const { lowPressure, highPressure, userId } = req.body;
+  let { createdTime } = req.body;
+  if (createdTime === null) {
+    createdTime = Date();
+  }
+
   const newRecord = new BPRecord({ lowPressure, highPressure, createdTime, user: userId });
 
   try {
@@ -49,7 +54,7 @@ export const deleteAllBPRecord = async (req, res) => {
 export const getBPRecords = async (req, res) => {
   const { startUTC, endUTC, userId } = req.body;
   const query = {
-    createdAt: {
+    createdTime: {
       $gte: new Date(startUTC),
       $lt: new Date(endUTC),
     },
